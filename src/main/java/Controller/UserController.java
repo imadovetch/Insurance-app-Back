@@ -1,41 +1,68 @@
 package Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import Model.User;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
+@Validated
 public class UserController {
 
+    // For demonstration purposes, we'll use an in-memory list
+    private List<User> users = new ArrayList<>();
+
     @GetMapping("/GetUsers")
-    public String getDummyUser() {
-        JSONObject jsonResponse = new JSONObject();
-
-        // Creating a dummy user object with sample data
-        jsonResponse.put("id", "N/A"); // Use actual user.getId() if available
-        jsonResponse.put("name", "John Doe");
-        jsonResponse.put("email", "johndoe@example.com");
-        jsonResponse.put("childs", 2);
-        jsonResponse.put("phoneNumber", "123-456-7890");
-        jsonResponse.put("adresse", "1234 Street Name, City, Country");
-        jsonResponse.put("salaire", 50000);
-
-        return jsonResponse.toString();
+    public List<User> getDummyUsers() {
+        // Return a list of users instead of a dummy user object
+        return users; // In a real application, retrieve this from a database
     }
+
     @PostMapping("/AddUser")
-    public String Adduser() {
-        JSONObject jsonResponse = new JSONObject();
+    public ResponseEntity<String> addUser(@RequestBody  @Valid User user) {
+        try {
+            user.setId(1L);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user.toString());
+        } catch (Exception e) {
 
-        // Creating a dummy user object with sample data
-        jsonResponse.put("id", "N/A"); // Use actual user.getId() if available
-        jsonResponse.put("name", "John Doe");
-        jsonResponse.put("email", "johndoe@example.com");
-        jsonResponse.put("childs", 2);
-        jsonResponse.put("phoneNumber", "123-456-7890");
-        jsonResponse.put("adresse", "1234 Street Name, City, Country");
-        jsonResponse.put("salaire", 50000);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error processing request: " + e.getMessage());
+        }
+    }
+    @PostMapping("/AddUsernormal")
+    public ResponseEntity<String> addUsernormal(@RequestBody String requestBody) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(requestBody);
+        } catch (Exception e) {
 
-        return jsonResponse.toString();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error processing request: " + e.getMessage());
+        }
     }
 }
+//
+//public class UserMapper {
+//
+//    public User mapStringToUser(String requestBody) {
+//        // Split the request body by commas and extract fields
+//        String[] fields = requestBody.split(",");
+//
+//        // Assuming the order of fields is consistent
+//        String name = fields[0].split(":")[1].trim().replace("\"", "");
+//        String email = fields[1].split(":")[1].trim().replace("\"", "");
+//        String password = fields[2].split(":")[1].trim().replace("\"", "");
+//        String phoneNumber = fields[3].split(":")[1].trim().replace("\"", "");
+//        String adresse = fields.length > 4 ? fields[4].split(":")[1].trim().replace("\"", "") : null; // Optional
+//        Integer age = fields.length > 5 ? Integer.valueOf(fields[5].split(":")[1].trim()) : null; // Optional
+//
+//        return new User(name, email, password, phoneNumber, adresse, age);
+//    }
+//}
+//

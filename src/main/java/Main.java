@@ -14,10 +14,10 @@ public class Main {
         User user = new User(
                 "Jane Doe",
                 "jane@example.com",
-                "password123",
-                LocalDate.of(1990, 1, 1),
                 "123-456-7890",
-                "123 Street, City"
+                "123 Street, City",
+                "password123",
+                5
         );
 
         // Save the user to the database

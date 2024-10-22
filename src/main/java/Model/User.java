@@ -1,6 +1,11 @@
 package Model;
 
 import jakarta.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Min; // Import this for age validation
 import java.time.LocalDate;
 
 @Entity
@@ -11,36 +16,44 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true)
+    @NotBlank(message = "Name cannot be empty")
+    @Column(nullable = false) // Ensure this field is not null in the database
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email should be valid")
+    @Column(nullable = false, unique = true) // Ensure this field is not null and unique
     private String email;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Column(nullable = false) // Ensure this field is not null in the database
     private String password;
 
-    @Column(nullable = true)
-    private LocalDate birthDate;
-
-    @Column(nullable = true)
+    @NotBlank(message = "Phone number cannot be empty")
+    @Column(nullable = false) // Ensure this field is not null in the database
     private String phoneNumber;
 
-    @Column(nullable = true)
+    @NotBlank(message = "Address cannot be empty")
+    @Column(nullable = false) // Ensure this field is not null in the database
     private String adresse;
+
+    @NotNull(message = "Age cannot be null") // Use NotNull for integer validation
+    @Min(value = 0, message = "Age must be at least 0") // Optional: enforce a minimum age
+    private Integer age; // Change to Integer (wrapper class) to allow null values
 
     // Default constructor
     public User() {
     }
 
     // Parameterized constructor
-    public User(String name, String email, String password, LocalDate birthDate, String phoneNumber, String adresse) {
+    public User(String name, String email, String phoneNumber, String adresse, String password, Integer age) {
         this.name = name;
         this.email = email;
-        this.password = password;
-        this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.adresse = adresse;
+        this.password = password;
+        this.age = age;
     }
 
     // Getters and Setters
@@ -76,14 +89,6 @@ public class User {
         this.password = password;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -100,6 +105,14 @@ public class User {
         this.adresse = adresse;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -107,9 +120,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", birthDate=" + birthDate +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", adresse='" + adresse + '\'' +
+                ", age=" + age +
                 '}';
     }
 }
