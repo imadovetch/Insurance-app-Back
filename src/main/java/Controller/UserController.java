@@ -1,5 +1,7 @@
 package Controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,16 @@ import java.util.List;
 
 @RestController
 @Validated
+
 public class UserController {
 
     // For demonstration purposes, we'll use an in-memory list
     private List<User> users = new ArrayList<>();
+
+
+
+    @Autowired
+    private UserService userService = new UserService();
 
     @GetMapping("/GetUsers")
     public List<User> getDummyUsers() {
@@ -26,7 +34,10 @@ public class UserController {
     @PostMapping("/AddUser")
     public ResponseEntity<String> addUser(@RequestBody  @Valid User user) {
         try {
-            user.setId(1L);
+
+
+            userService.addUser(user);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(user.toString());
         } catch (Exception e) {
 
@@ -35,12 +46,36 @@ public class UserController {
                     .body("Error processing request: " + e.getMessage());
         }
     }
-    @PostMapping("/AddUsernormal")
-    public ResponseEntity<String> addUsernormal(@RequestBody String requestBody) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(requestBody);
-        } catch (Exception e) {
 
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody String requestBody) {
+        try {
+            // Manually parse the request body to extract email and password
+            // Assuming the request body is JSON in the format: {"email": "example@example.com", "password": "password123"}
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(requestBody);
+
+            String email = jsonNode.get("email").asText();
+            String password = jsonNode.get("password").asText();
+
+            // Retrieve the user based on the email provided
+            User user = userService.findByEmail(email);
+
+            if (user == null) {
+                // If user with given email doesn't exist, return error response
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            }
+
+            // Check if the provided password matches the user's password
+            if (!user.getPassword().equals(password)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+            }
+
+            // If email and password match, return a success message
+            return ResponseEntity.ok("Login successful");
+
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error processing request: " + e.getMessage());
