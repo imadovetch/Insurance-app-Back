@@ -1,9 +1,11 @@
-package Dao;
+package com.programming.techie.Dao;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+//@Component
 public class JpaDao<T> {
 
     private Class<T> entityClass;
@@ -209,5 +211,28 @@ public class JpaDao<T> {
 
         return count;
     }
+
+    public List<T> fetchByUserId(String fieldName, Long userId) {
+        EntityManager entityManager = null;
+        List<T> entities = null;
+
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+            String queryStr = "FROM " + entityClass.getSimpleName() + " WHERE " + fieldName + " = :userId";
+            TypedQuery<T> query = entityManager.createQuery(queryStr, entityClass);
+            query.setParameter("userId", userId);
+
+            entities = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+
+        return entities;
+    }
+
 
 }

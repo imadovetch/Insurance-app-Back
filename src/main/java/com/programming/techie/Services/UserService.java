@@ -1,7 +1,7 @@
-package Controller;
+package com.programming.techie.Services;
 
-import Dao.JpaDao;
-import Model.User;
+import com.programming.techie.Dao.JpaDao;
+import com.programming.techie.Model.User;
 import org.springframework.stereotype.Component;
 
 
@@ -12,6 +12,9 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userDao.findByEmail(email, "User"); // Fetch user by email
+    }
+    public User findById(Long id) {
+        return userDao.findById(id);
     }
 
     public void addUser(User user) {

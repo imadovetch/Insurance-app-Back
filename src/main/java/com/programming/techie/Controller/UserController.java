@@ -1,13 +1,14 @@
-package Controller;
+package com.programming.techie.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.programming.techie.Services.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import Model.User;
+import com.programming.techie.Model.User;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
