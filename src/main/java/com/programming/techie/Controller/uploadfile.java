@@ -1,5 +1,8 @@
 package com.programming.techie.Controller;
 
+import com.programming.techie.Services.CertifService;
+import com.programming.techie.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class uploadfile {
 
+    @Autowired
+    private CertifService certfiService = new CertifService();
+
+
     private static final String UPLOAD_DIR = "uploads/";
 
     @PostMapping("/addfile")
@@ -38,7 +45,9 @@ public class uploadfile {
      * Upload single file using Spring Controller
      */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public @ResponseBody String uploadFileHandler(@RequestParam("file") MultipartFile file) {
+    public @ResponseBody String uploadFileHandler(@RequestParam("file") MultipartFile file,
+                            @RequestParam("assuranceid") String assuranceid
+    ) {
         // Specify the directory where files will be uploaded
         String uploadDirPath = "C:\\Users\\ycode\\Downloads\\start\\src\\main\\java\\com\\programming\\techie\\uploads";
         File dir = new File(uploadDirPath);
@@ -69,6 +78,7 @@ public class uploadfile {
                     stream.write(bytes);
                 }
 
+                certfiService.addCertif(safeFileName,assuranceid);
                 return "You successfully uploaded the file as " + safeFileName;
             } catch (Exception e) {
                 return "You failed to upload the file => " + e.getMessage();

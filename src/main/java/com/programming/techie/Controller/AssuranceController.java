@@ -68,9 +68,13 @@ public class AssuranceController {
                                             @RequestHeader HttpHeaders headers){
 
         String authorizationHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
-
-
         Long userId = Long.valueOf(authorizationHeader);
+
+          Boolean x =   assuranceService.check(Long.valueOf(authorizationHeader));
+        if (x){
+            return null;
+        }
+
 
         User user = userService.findById(userId);
         assuranceSante.setUser(user);

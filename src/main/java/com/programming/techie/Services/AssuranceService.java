@@ -53,4 +53,9 @@ public class AssuranceService {
     public void addAssuranceSante(AssuranceSante user) {
         SanteDao.save(user); // Save new user
     }
+
+    public Boolean check(Long id){
+        AssuranceSante x = SanteDao.findById(id);
+        return x != null;
+    }
 }
