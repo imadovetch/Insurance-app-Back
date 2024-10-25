@@ -1,4 +1,4 @@
-package Model;
+package com.programming.techie.Model;
 
 import jakarta.persistence.*;
 import javax.validation.constraints.Email;

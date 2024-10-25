@@ -11,13 +11,22 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!--    this line is meant for spring mvc annotation, like @Controller-->
+    <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
 
-    <context:component-scan base-package="Controller" />
-    <bean class=
-                  "org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!-- Component scanning for your controllers -->
+    <context:component-scan base-package="com.programming.techie" />
+
+    <!-- View resolver for JSPs -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
+
+    <!-- Multipart Resolver for handling file uploads -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100000" /> <!-- Set the max upload size -->
+    </bean>
+
 </beans>

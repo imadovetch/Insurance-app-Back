@@ -1,31 +1,38 @@
-import Dao.JpaDao;
+import com.programming.techie.Dao.JpaDao;
 
-import Dao.JpaDao;
-import Model.User;
+import com.programming.techie.Model.AssuranceAutomobile;
+import com.programming.techie.Model.AssuranceHabitation;
+import com.programming.techie.Model.AssuranceSante;
+import com.programming.techie.Model.User;
 
-import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a JpaDao instance for User
-        JpaDao<User> userDao = new JpaDao<>(User.class);
 
-        // Create a dummy user
-        User user = new User(
-                "Jane Doe",
-                "jane@example.com",
-                "123-456-7890",
-                "123 Street, City",
-                "password123",
-                5
-        );
 
-        // Save the user to the database
-        userDao.save(user);
+        JpaDao<AssuranceAutomobile> assuranceAutomobileDao = new JpaDao<>(AssuranceAutomobile.class);
+        JpaDao< AssuranceHabitation> assuranceHabitationDao = new JpaDao<>(AssuranceHabitation.class);
+        JpaDao<AssuranceSante> assuranceSanteDao = new JpaDao<>(AssuranceSante.class);
 
-        // Print confirmation
-        System.out.println("Dummy user saved: " + user);
+
+
+            Map<String, List<?>> assurancesMap = new HashMap<>();
+
+            List<AssuranceAutomobile> automobileAssurances = assuranceAutomobileDao.fetchByUserId("user.id", 1L);
+            assurancesMap.put("AssuranceAutomobile", automobileAssurances);
+
+            List<AssuranceHabitation> habitationAssurances = assuranceHabitationDao.fetchByUserId("user.id", 1L);
+            assurancesMap.put("AssuranceHabitation", habitationAssurances);
+
+            List<AssuranceSante> santeAssurances = assuranceSanteDao.fetchByUserId("user.id", 1L);
+            assurancesMap.put("AssuranceSante", santeAssurances);
+
+        System.out.println(assurancesMap.toString());
+        }
 
 
     }
-}
+

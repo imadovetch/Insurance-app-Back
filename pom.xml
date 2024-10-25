@@ -73,6 +73,30 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>3.0.1</version> <!-- You can use the latest version -->
         </dependency>
+
+
+<!--        uploadfile-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <!-- Apache Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -84,3 +108,134 @@
         </plugins>
     </build>
 </project>
+
+
+
+
+<!--        <?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0"-->
+<!--         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+<!--<modelVersion>4.0.0</modelVersion>-->
+
+<!--<groupId>org.example</groupId>-->
+<!--<artifactId>start</artifactId>-->
+<!--<version>1.0-SNAPSHOT</version>-->
+<!--<packaging>war</packaging>-->
+
+<!--<properties>-->
+<!--    <maven.compiler.source>17</maven.compiler.source>-->
+<!--    <maven.compiler.target>17</maven.compiler.target>-->
+<!--</properties>-->
+
+<!--<dependencies>-->
+<!--    &lt;!&ndash; Spring Context for XML-based configuration support &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>org.springframework</groupId>-->
+<!--        <artifactId>spring-context</artifactId>-->
+<!--        <version>5.3.26</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Spring Web MVC for the MVC components and view resolvers &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>org.springframework</groupId>-->
+<!--        <artifactId>spring-webmvc</artifactId>-->
+<!--        <version>5.3.26</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Spring Web for additional web support (Servlets, etc.) &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>org.springframework</groupId>-->
+<!--        <artifactId>spring-web</artifactId>-->
+<!--        <version>5.3.26</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Commons FileUpload for multipart file upload handling &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>commons-fileupload</groupId>-->
+<!--        <artifactId>commons-fileupload</artifactId>-->
+<!--        <version>1.4</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; JSTL for JSP support if you are using JSP pages for views &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>javax.servlet</groupId>-->
+<!--        <artifactId>jstl</artifactId>-->
+<!--        <version>1.2</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Servlet API for supporting web functionalities &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>javax.servlet</groupId>-->
+<!--        <artifactId>javax.servlet-api</artifactId>-->
+<!--        <version>4.0.1</version>-->
+<!--        <scope>provided</scope>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Jakarta Servlet API (optional) - if you’re using Jakarta EE &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>jakarta.servlet</groupId>-->
+<!--        <artifactId>jakarta.servlet-api</artifactId>-->
+<!--        <version>5.0.0</version>-->
+<!--        <scope>provided</scope>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--        <groupId>jakarta.persistence</groupId>-->
+<!--        <artifactId>jakarta.persistence-api</artifactId>-->
+<!--        <version>3.2.0</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Javax Validation API &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>javax.validation</groupId>-->
+<!--        <artifactId>validation-api</artifactId>-->
+<!--        <version>2.0.1.Final</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Hibernate Validator (Reference Implementation) &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>org.hibernate.validator</groupId>-->
+<!--        <artifactId>hibernate-validator</artifactId>-->
+<!--        <version>6.2.4.Final</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--        <groupId>org.slf4j</groupId>-->
+<!--        <artifactId>slf4j-api</artifactId>-->
+<!--        <version>2.0.7</version>-->
+<!--    </dependency>-->
+
+
+<!--    <dependency>-->
+<!--        <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--        <artifactId>jackson-databind</artifactId>-->
+<!--        <version>2.15.2</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; Jackson Core (needed for Jackson Databind) &ndash;&gt;-->
+<!--    <dependency>-->
+<!--        <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--        <artifactId>jackson-core</artifactId>-->
+<!--        <version>2.15.2</version>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+<!--        <groupId>javax.annotation</groupId>-->
+<!--        <artifactId>javax.annotation-api</artifactId>-->
+<!--        <version>1.3.2</version>-->
+<!--    </dependency>-->
+<!--</dependencies>-->
+
+
+<!--<build>-->
+<!--    <plugins>-->
+<!--        &lt;!&ndash; Use Maven War Plugin if you’re building a WAR file &ndash;&gt;-->
+<!--        <plugin>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-war-plugin</artifactId>-->
+<!--            <version>3.3.1</version>-->
+<!--        </plugin>-->
+<!--    </plugins>-->
+<!--</build>-->
+<!--</project>-->
